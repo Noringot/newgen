@@ -21,15 +21,19 @@ const requiredRange2 = [100, 350];
 const requiredRange3 = [200, null];
 
 function filterCourses(range: (null | number)[], courses: Course[]) {
+    const rangeMin = range[0] || 0;
+    const rangeMax = range[1] || Infinity;
+
     return courses.filter(course => {
-        if( ((range[0] || 0) <= (course.prices[0] || 0))
-            && (range[1] === null || course.prices[1] === null || range[1] >= course.prices[1])
-            && (range[1] === null || (course.prices[0] || 0) <= range[1]))
-        {
+        const priceMin = course.prices[0] || 0;
+        const priceMax = course.prices[1] || Infinity;
+
+        if(rangeMin <= priceMin && rangeMax >= priceMax) {
             return course
         }
     })
 }
+
 
 console.log(filterCourses(requiredRange1, courses));
 console.log(filterCourses(requiredRange2, courses));
