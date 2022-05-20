@@ -16,24 +16,24 @@ const courses: Course[] = [
 ];
 
 // Варианты цен (фильтры), которые ищет пользователь
-const requiredRange1 = [null, 200];
+const requiredRange1 = [0, 0];
 const requiredRange2 = [100, 350];
 const requiredRange3 = [200, null];
 
+
 function filterCourses(range: (null | number)[], courses: Course[]) {
-    const rangeMin = range[0] || 0;
-    const rangeMax = range[1] || Infinity;
+    const rangeMin = range[0] === null ? 0 : range[0];
+    const rangeMax = range[1] === null ? Infinity : range[1];
 
     return courses.filter(course => {
-        const priceMin = course.prices[0] || 0;
-        const priceMax = course.prices[1] || Infinity;
+        const priceMin = course.prices[0] === null ? 0 : course.prices[0];
+        const priceMax = course.prices[1] === null ? Infinity : course.prices[1];
 
         if(rangeMin <= priceMin && rangeMax >= priceMax) {
             return course
         }
     })
 }
-
 
 console.log(filterCourses(requiredRange1, courses));
 console.log(filterCourses(requiredRange2, courses));
